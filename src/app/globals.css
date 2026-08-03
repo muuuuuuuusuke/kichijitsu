@@ -1,52 +1,60 @@
 @import "tailwindcss";
 
 /*
-  読者は、入籍や納車の日取りを決めたい人。
-  占いサイトの紫やネオンではなく、暦らしい生成りの紙に、
-  朱（吉日の印）と金茶だけを差す。めでたいが、うるさくない。
+  神社で頒布される暦本の設え。
+  クリーム地＋明朝＋朱アクセントは誰のものでもない定型なので、
+  ①和紙の繊維（feTurbulenceの粒）を全面に敷き、
+  ②見出しを筆書体に、③朱は「色」ではなく「朱肉＝捺すもの」として使う。
 
-  ダークモードは持たない。暦は紙であるべき。
+  ダークモードは持たない。暦は紙。
 */
 :root {
-  --paper: #faf7f0;
-  --paper-raised: #fffdf8;
-  --ink: #2b2620;
-  --ink-soft: #6b6357;
-  --ink-faint: #9d9486;
-  --line: #e8e1d3;
-  --shu: #c33d2e;
-  --shu-soft: #faeae6;
-  --gold: #a8842c;
+  --washi: #f1e9d7;
+  --washi-raised: #f9f3e4;
+  --sumi: #221c13;
+  --sumi-soft: #5f5644;
+  --sumi-faint: #94896f;
+  --line: #ddd2b8;
+  --shu: #c43823;
+  --shu-soft: #f6e4dc;
+  --kin: #a67c1f;
+  --ai: #2c4a63;
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-paper-raised: var(--paper-raised);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-ink-faint: var(--ink-faint);
+  --color-paper: var(--washi);
+  --color-paper-raised: var(--washi-raised);
+  --color-ink: var(--sumi);
+  --color-ink-soft: var(--sumi-soft);
+  --color-ink-faint: var(--sumi-faint);
   --color-line: var(--line);
   --color-shu: var(--shu);
   --color-shu-soft: var(--shu-soft);
-  --color-gold: var(--gold);
+  --color-kin: var(--kin);
+  --color-indigo: var(--ai);
   --font-sans: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
-  --font-serif: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  --font-brush: "Yuji Syuku", "Hiragino Mincho ProN", serif;
 }
 
 html { color-scheme: light; }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
+  background-color: var(--washi);
+  /* 和紙: 細かい繊維の粒(高周波)と、漉きムラ(低周波)の二層 */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' stitchTiles='stitch' seed='7'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.04 0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  color: var(--sumi);
   font-family: var(--font-sans);
   font-feature-settings: "palt";
 }
 
+/* 見出し: 筆。大きく使い、本文とは混ぜない */
 .display {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1.4;
+  font-family: var(--font-brush);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
 }
 
 .figure {
@@ -58,6 +66,32 @@ body {
 .label {
   font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
-  color: var(--ink-faint);
+  letter-spacing: 0.18em;
+  color: var(--sumi-faint);
+}
+
+/* 朱印: 捺した印。にじみは layout.tsx の SVG フィルタで付ける */
+.stamp {
+  font-family: var(--font-brush);
+  color: var(--shu);
+  border: 3px solid var(--shu);
+  filter: url(#inkbleed);
+}
+
+/* 暦本の罫: 二重線 */
+.rule-double {
+  border-top: 3px double var(--sumi);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stamp-in {
+    animation: stamp-in 0.35s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+  }
+  @keyframes stamp-in {
+    from { opacity: 0; transform: scale(1.6) rotate(-11deg); }
+    to { opacity: 1; transform: scale(1) rotate(-6deg); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stamp-in { transform: rotate(-6deg); }
 }

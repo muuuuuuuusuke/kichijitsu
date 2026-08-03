@@ -66,7 +66,7 @@ export default async function MonthPage({
         （慣習では、不成就日の重なりは吉を弱めると読まれます）。
       </p>
 
-      <ul className="mt-8 border-t border-line">
+      <ul className="rule-double mt-8">
         {days.map(({ iso, day, weekday, info }) => {
           const labels = goodLabels(info);
           return (
@@ -91,8 +91,8 @@ export default async function MonthPage({
                 {labels.map((l) => (
                   <span
                     key={l}
-                    className={`rounded-sm px-1.5 py-0.5 text-[11px] font-bold ${
-                      l === "天赦日" ? "bg-shu text-white" : "bg-shu-soft text-shu"
+                    className={`px-1.5 py-0.5 text-[11px] font-bold ${
+                      l === "天赦日" ? "stamp !border-2 px-2" : "bg-shu-soft text-shu"
                     }`}
                   >
                     {l}

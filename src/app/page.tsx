@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Stamp } from "@/components/Stamp";
 import { DAYS, PURPOSES, fmtJa, goodLabels } from "@/lib/koyomi";
 
 /** 天赦日と、天赦日×一粒万倍日の重なりを年ごとに拾う。 */
@@ -13,13 +14,28 @@ export default function Home() {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-14">
-      <p className="label">六曜・暦注カレンダー（2025〜2027）</p>
-      <h1 className="display mt-3 text-[clamp(1.9rem,6vw,3rem)]">
-        いい日を選んで、
-        <br />
-        始めるためのカレンダー
-      </h1>
-      <p className="mt-5 max-w-xl text-[0.8125rem] leading-7 text-ink-soft">
+      {/* 暦本の表紙。縦書きの筆文字に、朱印をひとつだけ捺す。 */}
+      <div className="flex items-start justify-between gap-6">
+        {/* 縦書きは右から左に読む。h1を右列に、添えの一行を左列に置く */}
+        <div className="flex flex-row-reverse justify-end gap-7">
+          <h1
+            className="display text-[clamp(2.6rem,9vw,4.2rem)] leading-[1.18]"
+            style={{ writingMode: "vertical-rl" }}
+          >
+            いい日を選んで、
+            <br />
+            始める。
+          </h1>
+          <p
+            className="label pt-2 tracking-[0.3em]"
+            style={{ writingMode: "vertical-rl" }}
+          >
+            六曜・暦注カレンダー 二〇二五 〜 二〇二七
+          </p>
+        </div>
+        <Stamp size="lg" animate>吉日</Stamp>
+      </div>
+      <p className="mt-8 max-w-xl text-[0.8125rem] leading-7 text-ink-soft">
         一粒万倍日・天赦日・大安・寅の日・巳の日を、月別と用途別で引けます。
         日付はすべて天文計算（朔と二十四節気）から求め、
         公表されている暦と突き合わせて検証したものです。
@@ -48,7 +64,7 @@ export default function Home() {
             <p className="mt-2 text-xs leading-6 text-ink-soft">
               天赦日は「天がすべてを赦す」と読まれる、暦の上で最上の吉日です。年に5〜6日しかありません。
             </p>
-            <ul className="mt-4 border-t border-line">
+            <ul className="rule-double mt-4">
               {tensha.map(({ iso, v }) => (
                 <li key={iso} className="flex items-baseline gap-3 border-b border-line py-2.5">
                   <span className="figure text-sm">{fmtJa(iso)}</span>
@@ -56,8 +72,10 @@ export default function Home() {
                     {goodLabels(v).map((l) => (
                       <span
                         key={l}
-                        className={`rounded-sm px-1.5 py-0.5 text-[11px] font-bold ${
-                          l === "天赦日" ? "bg-shu text-white" : "bg-shu-soft text-shu"
+                        className={`px-1.5 py-0.5 text-[11px] font-bold ${
+                          l === "天赦日"
+                            ? "stamp !border-2 px-2"
+                            : "bg-shu-soft text-shu"
                         }`}
                       >
                         {l}

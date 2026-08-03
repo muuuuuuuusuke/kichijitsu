@@ -39,10 +39,17 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=BIZ+UDPGothic:wght@400;700&display=swap"
         />
       </head>
       <body className="flex min-h-full flex-col antialiased">
+        {/* 朱印のにじみ。捺した印のエッジを歪ませる変位フィルタ */}
+        <svg aria-hidden width="0" height="0" style={{ position: "absolute" }}>
+          <filter id="inkbleed">
+            <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="3" seed="4" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" />
+          </filter>
+        </svg>
         <header className="border-b border-line bg-paper-raised">
           <div className="mx-auto flex w-full max-w-3xl items-center justify-between px-5 py-3.5">
             <Link href="/" className="display text-base hover:text-shu">

@@ -48,7 +48,7 @@ export default async function PurposePage({
       <p className="mt-4 max-w-xl text-[0.8125rem] leading-7 text-ink-soft">{p.lead}</p>
 
       <section className="mt-9">
-        <div className="flex items-baseline justify-between border-b-2 border-ink pb-2">
+        <div className="rule-double flex items-baseline justify-between pt-2 pb-2">
           <h2 className="display text-lg">良い日順（2026年8月〜2027年7月）</h2>
         </div>
         <ol className="divide-y divide-line">
@@ -60,8 +60,8 @@ export default async function PurposePage({
                 {goodLabels(info).map((l) => (
                   <span
                     key={l}
-                    className={`rounded-sm px-1.5 py-0.5 text-[11px] font-bold ${
-                      l === "天赦日" ? "bg-shu text-white" : "bg-shu-soft text-shu"
+                    className={`px-1.5 py-0.5 text-[11px] font-bold ${
+                      l === "天赦日" ? "stamp !border-2 px-2" : "bg-shu-soft text-shu"
                     }`}
                   >
                     {l}
