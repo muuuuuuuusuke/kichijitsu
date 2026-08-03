@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
+/*
+  読者は、入籍や納車の日取りを決めたい人。
+  占いサイトの紫やネオンではなく、暦らしい生成りの紙に、
+  朱（吉日の印）と金茶だけを差す。めでたいが、うるさくない。
+
+  ダークモードは持たない。暦は紙であるべき。
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #faf7f0;
+  --paper-raised: #fffdf8;
+  --ink: #2b2620;
+  --ink-soft: #6b6357;
+  --ink-faint: #9d9486;
+  --line: #e8e1d3;
+  --shu: #c33d2e;
+  --shu-soft: #faeae6;
+  --gold: #a8842c;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-shu: var(--shu);
+  --color-shu-soft: var(--shu-soft);
+  --color-gold: var(--gold);
+  --font-sans: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --font-serif: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { color-scheme: light; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "palt";
+}
+
+.display {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.figure {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
 }

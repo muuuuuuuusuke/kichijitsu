@@ -1,65 +1,110 @@
-import Image from "next/image";
+import Link from "next/link";
+import { DAYS, PURPOSES, fmtJa, goodLabels } from "@/lib/koyomi";
+
+/** 天赦日と、天赦日×一粒万倍日の重なりを年ごとに拾う。 */
+function tenshaOf(year: number) {
+  return Object.entries(DAYS)
+    .filter(([iso, v]) => iso.startsWith(String(year)) && v.tensha)
+    .map(([iso, v]) => ({ iso, v }));
+}
 
 export default function Home() {
+  const years = [2026, 2027];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-14">
+      <p className="label">六曜・暦注カレンダー（2025〜2027）</p>
+      <h1 className="display mt-3 text-[clamp(1.9rem,6vw,3rem)]">
+        いい日を選んで、
+        <br />
+        始めるためのカレンダー
+      </h1>
+      <p className="mt-5 max-w-xl text-[0.8125rem] leading-7 text-ink-soft">
+        一粒万倍日・天赦日・大安・寅の日・巳の日を、月別と用途別で引けます。
+        日付はすべて天文計算（朔と二十四節気）から求め、
+        公表されている暦と突き合わせて検証したものです。
+      </p>
+
+      <section className="mt-10">
+        <h2 className="display text-xl">用途から探す</h2>
+        <div className="mt-4 grid grid-cols-1 gap-px border border-line bg-line sm:grid-cols-2">
+          {PURPOSES.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/${p.slug}`}
+              className="bg-paper-raised px-4 py-3.5 text-sm transition-colors hover:text-shu"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              {p.title}
+            </Link>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {years.map((year) => {
+        const tensha = tenshaOf(year);
+        return (
+          <section key={year} className="mt-12">
+            <h2 className="display text-xl">{year}年の天赦日（{tensha.length}日）</h2>
+            <p className="mt-2 text-xs leading-6 text-ink-soft">
+              天赦日は「天がすべてを赦す」と読まれる、暦の上で最上の吉日です。年に5〜6日しかありません。
+            </p>
+            <ul className="mt-4 border-t border-line">
+              {tensha.map(({ iso, v }) => (
+                <li key={iso} className="flex items-baseline gap-3 border-b border-line py-2.5">
+                  <span className="figure text-sm">{fmtJa(iso)}</span>
+                  <span className="flex flex-wrap gap-1.5">
+                    {goodLabels(v).map((l) => (
+                      <span
+                        key={l}
+                        className={`rounded-sm px-1.5 py-0.5 text-[11px] font-bold ${
+                          l === "天赦日" ? "bg-shu text-white" : "bg-shu-soft text-shu"
+                        }`}
+                      >
+                        {l}
+                      </span>
+                    ))}
+                    {v.fujoju && (
+                      <span className="rounded-sm bg-line px-1.5 py-0.5 text-[11px] text-ink-soft">
+                        不成就日と重なる
+                      </span>
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+
+      <section className="mt-12">
+        <h2 className="display text-xl">月別カレンダー</h2>
+        <div className="mt-4 space-y-3">
+          {[2025, 2026, 2027].map((year) => (
+            <div key={year} className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+              <span className="label">{year}年</span>
+              {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                <Link
+                  key={m}
+                  href={`/calendar/${year}/${m}`}
+                  className="text-sm text-ink-soft underline-offset-2 hover:text-shu hover:underline"
+                >
+                  {m}月
+                </Link>
+              ))}
+            </div>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="mt-12 text-xs leading-6 text-ink-faint">
+        <p className="label mb-3">この暦について</p>
+        <p>
+          六曜は旧暦（朔で始まる月）から、一粒万倍日・天赦日は二十四節気と日の干支から
+          機械的に決まります。当サイトは天文計算でこれらを算出し、
+          公表されている暦（2026年の天赦日全6日・一粒万倍日ほか）との一致を確認しています。
+          吉凶そのものは慣習であり、効果を保証するものではありません。
+        </p>
+      </section>
+    </main>
   );
 }
