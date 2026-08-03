@@ -22,9 +22,7 @@ export default function Home() {
             className="display text-[clamp(2.6rem,9vw,4.2rem)] leading-[1.18]"
             style={{ writingMode: "vertical-rl" }}
           >
-            いい日を選んで、
-            <br />
-            始める。
+            いい日を選ぼう。
           </h1>
           <p
             className="label pt-2 tracking-[0.3em]"
