@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PURPOSES, bestDays, fmtJa, goodLabels } from "@/lib/koyomi";
+import { RakutenItems } from "@/components/RakutenItems";
 
 // 静的サイトなので「向こう12ヶ月」の起点はビルド時点。データは2027年末まである。
 const FROM = "2026-08-01";
@@ -77,6 +78,21 @@ export default async function PurposePage({
         </ol>
         <p className="mt-4 text-xs leading-6 text-ink-faint">{p.note}</p>
       </section>
+
+      {p.slug === "saifu" && (
+        <>
+          {/* 財布ページだけの商品ブロック。日取り(寅の日)と買う物(財布)が同じ文脈にある唯一のページ。 */}
+          <RakutenItems
+            group="saifu_mens"
+            heading="使い始めの日に合わせて新調する（メンズ長財布）"
+            note="レビュー件数の多い順に取得した本革長財布です。吉日に使い始める前提なら、届くまでの日数も見て選んでください。"
+          />
+          <RakutenItems
+            group="saifu_ladies"
+            heading="使い始めの日に合わせて新調する（レディース長財布）"
+          />
+        </>
+      )}
 
       <section className="mt-12">
         <p className="label">ほかの用途</p>
