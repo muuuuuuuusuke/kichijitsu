@@ -81,6 +81,8 @@ export interface Purpose {
   lead: string;
   weights: Partial<Record<"tensha" | "ichiryu" | "taian" | "tora" | "mi", number>>;
   note: string;
+  /** 同じ慣習の文脈でつながる外部ページ。金運の用途にだけ置く。 */
+  related?: { href: string; label: string };
 }
 
 export const PURPOSES: Purpose[] = [
@@ -107,6 +109,10 @@ export const PURPOSES: Purpose[] = [
     lead: "金運の慣習では、寅の日（金運の虎）・巳の日（弁財天の使い）・一粒万倍日が財布の新調・使い始めに選ばれます。",
     weights: { tensha: 5, ichiryu: 3, tora: 3, mi: 2 },
     note: "一粒万倍日は「借金も万倍」と読む流儀もあります。増やしたいものだけを始める日です。",
+    related: {
+      href: "https://takarakuji-map.vercel.app/",
+      label: "宝くじを買う日に選ぶ人も多い日です。実際に高額当せんが出た売り場の記録",
+    },
   },
   {
     slug: "nosha",

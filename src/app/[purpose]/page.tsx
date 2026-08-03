@@ -77,6 +77,14 @@ export default async function PurposePage({
           ))}
         </ol>
         <p className="mt-4 text-xs leading-6 text-ink-faint">{p.note}</p>
+        {p.related && (
+          <p className="mt-3 text-sm leading-7">
+            {p.related.label}：
+            <a href={p.related.href} className="text-shu underline underline-offset-2">
+              高額当せん売り場の地図
+            </a>
+          </p>
+        )}
       </section>
 
       {p.slug === "saifu" && (

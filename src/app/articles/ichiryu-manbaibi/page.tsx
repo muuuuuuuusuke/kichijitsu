@@ -44,6 +44,12 @@ export default function Page() {
         なお、<strong>不成就日と重なる日は吉が打ち消される</strong>と読む流儀が広く、
         当サイトのカレンダーでも重なりを明示しています。
       </p>
+      <p>
+        宝くじの購入日に一粒万倍日を選ぶ人も多くいます。実際に高額当せんが出た売り場の
+        記録は
+        <a href="https://takarakuji-map.vercel.app/">高額当せん売り場の地図</a>
+        にまとめてあります（ただし当せん確率は売り場によって変わりません）。
+      </p>
 
       <p className="text-xs text-ink-faint">
         吉凶は暦の慣習であり、科学的根拠を主張するものではありません。
