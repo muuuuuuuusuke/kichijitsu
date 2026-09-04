@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   verification: {
     google: "KPe0iMIzhr19t3Ml_nAZBxmRBeS5A_svFCPMSfH3Tv4",
   },
+  // Pinterest のサイト認証。認証すると、他人がこのサイトのページを
+  // ピンしたときにも運営者名とアナリティクスが紐づく。値はアカウント共通。
+  other: { "p:domain_verify": "5cfd1657f375c7632807a4e178b6b032" },
   openGraph: {
     title: SITE_NAME,
     description: DESCRIPTION,
